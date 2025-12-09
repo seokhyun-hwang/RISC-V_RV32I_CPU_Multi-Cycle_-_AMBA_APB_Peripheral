@@ -1,44 +1,42 @@
 # 🚀 SystemVerilog RISC-V RV32I MCU SoC
 
-\<div align="center"\>
+<div align="center">
 
-\<img src="[https://img.shields.io/badge/Architecture-RISC--V\_RV32I-purple?style=flat\&logo=riscv](https://www.google.com/search?q=https://img.shields.io/badge/Architecture-RISC--V_RV32I-purple%3Fstyle%3Dflat%26logo%3Driscv)" /\>
-\<img src="[https://img.shields.io/badge/Bus\_Protocol-AMBA\_APB-orange?style=flat](https://www.google.com/search?q=https://img.shields.io/badge/Bus_Protocol-AMBA_APB-orange%3Fstyle%3Dflat)" /\>
-\<img src="[https://img.shields.io/badge/Language-SystemVerilog-green?style=flat\&logo=systemverilog](https://www.google.com/search?q=https://img.shields.io/badge/Language-SystemVerilog-green%3Fstyle%3Dflat%26logo%3Dsystemverilog)" /\>
-\<img src="[https://img.shields.io/badge/Verification-UVM\_Style\_OOP-blue?style=flat](https://www.google.com/search?q=https://img.shields.io/badge/Verification-UVM_Style_OOP-blue%3Fstyle%3Dflat)" /\>
-\<img src="[https://img.shields.io/badge/Platform-Xilinx\_Vivado-red?style=flat\&logo=xilinx](https://www.google.com/search?q=https://img.shields.io/badge/Platform-Xilinx_Vivado-red%3Fstyle%3Dflat%26logo%3Dxilinx)" /\>
+<img src="https://img.shields.io/badge/Architecture-RISC--V_RV32I-purple?style=flat&logo=riscv" />
+<img src="https://img.shields.io/badge/Bus_Protocol-AMBA_APB-orange?style=flat" />
+<img src="https://img.shields.io/badge/Language-SystemVerilog-green?style=flat&logo=systemverilog" />
+<img src="https://img.shields.io/badge/Verification-UVM_Style_OOP-blue?style=flat" />
+<img src="https://img.shields.io/badge/Platform-Xilinx_Vivado-red?style=flat&logo=xilinx" />
 
 <br>
 
 **32-bit RISC-V CPU Core + APB Interconnect + Peripherals (GPIO, UART)**<br>
 단일 사이클 CPU 코어와 표준 버스 프로토콜을 기반으로 설계된 FPGA 임베디드 MCU 시스템
 
-\</div\>
+</div>
 
------
+---
 
 ## 📖 1. 프로젝트 개요 (Overview)
 
 이 프로젝트는 **SystemVerilog**를 사용하여 **RISC-V RV32I (Base Integer Instruction Set)** 아키텍처를 구현한 프로세서 설계입니다. CPU 코어는 **Control Unit**과 **DataPath**로 명확히 분리되어 있으며, 최상위 모듈인 `MCU`에서 **AMBA APB 프로토콜**을 통해 메모리 및 다양한 주변장치(UART, GPIO)와 통합되어 실제 임베디드 어플리케이션을 실행할 수 있는 SoC 구조를 갖추고 있습니다.
 
 ### ✨ 핵심 설계 특징 (Key Features)
+* **RISC-V Core:** 산술/논리, 메모리, 분기 등 RV32I 명령어 셋을 완벽히 지원하는 단일 사이클 프로세서.
+* **Bus System:** 표준 **AMBA APB 3.0 Protocol**을 구현한 Master Bridge를 통해 시스템 확장성 확보.
+* **Memory Architecture:**
+    * **Instruction Memory (ROM):** 프로그램 코드 저장 (Read Only).
+    * **Data Memory (RAM):** APB 슬레이브로 동작하는 4KB 데이터 저장소.
+* **Peripherals:**
+    * **GPIO:** GPO(LED 제어), GPI(Switch 입력), GPIO(양방향 입출력) 모듈 탑재.
+    * **UART:** 송수신(Tx/Rx) FIFO 및 상태 레지스터를 갖춘 시리얼 통신 컨트롤러.
+* **Advanced Verification:** Transaction, Driver, Monitor, Scoreboard 클래스를 활용한 **Constrained Random Verification** 환경 구축.
 
-  * **RISC-V Core:** 산술/논리, 메모리, 분기 등 RV32I 명령어 셋을 완벽히 지원하는 단일 사이클 프로세서.
-  * **Bus System:** 표준 **AMBA APB 3.0 Protocol**을 구현한 Master Bridge를 통해 시스템 확장성 확보[cite: 1312].
-  * **Memory Architecture:**
-      * **Instruction Memory (ROM):** 프로그램 코드 저장 (Read Only).
-      * **Data Memory (RAM):** APB 슬레이브로 동작하는 4KB 데이터 저장소.
-  * **Peripherals:**
-      * [cite_start]**GPIO:** GPO(LED 제어), GPI(Switch 입력), GPIO(양방향 입출력) 모듈 탑재[cite: 1377].
-      * [cite_start]**UART:** 송수신(Tx/Rx) FIFO 및 상태 레지스터를 갖춘 시리얼 통신 컨트롤러[cite: 135].
-  * [cite_start]**Advanced Verification:** Transaction, Driver, Monitor, Scoreboard 클래스를 활용한 **Constrained Random Verification** 환경 구축[cite: 1153].
-
------
+---
 
 ## 🏗️ 2. 시스템 아키텍처 (System Architecture)
 
 ### 2.1 MCU Top-Level Diagram
-
 CPU는 명령어 버스와 데이터 버스가 분리된 Harvard Architecture 구조를 가지며, 데이터 버스는 APB Bridge를 통해 주변 장치들과 연결됩니다.
 
 ```mermaid
@@ -55,7 +53,6 @@ graph TD
         BRIDGE -->|PSEL3| GPIO["GPIO (Bidirectional)"]
         BRIDGE -->|PSEL4| UART["UART Controller"]
     end
-```
 
 ### 2.2 APB Memory Map
 
@@ -68,6 +65,27 @@ graph TD
 | **GPI** | `0x1000_2000` | 입력 포트 (Switch Input) | PSEL2 |
 | **GPIO** | `0x1000_3000` | 범용 양방향 입출력 포트 | PSEL3 |
 | **UART** | `0x1000_4000` | 시리얼 통신 (Tx/Rx Data & Status) | PSEL4 |
+
+
+2.3 CPU Core Microarchitecture
+CPU 내부는 제어 신호를 생성하는 Control Unit과 실제 연산을 수행하는 Data Path로 구성됩니다.
+
+```mermaid
+graph LR
+    Input[Instruction Code] -->|Opcode| CU[Control Unit]
+    Input -->|rs1, rs2, rd, imm| DP[Data Path]
+    
+    subgraph "CPU Core Logic"
+        CU -->|ALU Control| ALU[ALU]
+        CU -->|RegFile WE| RF[Register File]
+        CU -->|Branch/Jump| PC[PC Logic]
+        CU -->|ImmSel| EXT[Imm Extender]
+        
+        RF <==>|"Operands"| ALU
+        EXT -->|"Immediate"| ALU
+        ALU -->|"Result / Address"| Output[Data Bus]
+    end
+```
 
 -----
 
