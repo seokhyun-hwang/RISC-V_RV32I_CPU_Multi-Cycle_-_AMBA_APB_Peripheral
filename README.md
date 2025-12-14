@@ -1,15 +1,30 @@
+요청하신 배지 스타일을 통일된 `flat` 스타일로 변경하고, 발표 자료 PDF 링크를 배지 형태로 자연스럽게 추가하여 가독성과 완성도를 높였습니다.
+
+아래 코드를 복사해서 `README.md` 파일에 그대로 붙여넣으시면 됩니다.
+
+-----
+
+### 📋 README.md (복사하여 사용하세요)
+
+````markdown
 # 🚀 SystemVerilog RISC-V RV32I Multi-Cycle MCU
 
-![Architecture](https://img.shields.io/badge/Architecture-RISC--V_RV32I-purple?style=flat&logo=riscv)
-![Implementation](https://img.shields.io/badge/Implementation-Multi_Cycle_FSM-blue?style=flat)
-![Bus](https://img.shields.io/badge/Bus_Protocol-AMBA_APB-orange?style=flat)
-![Language](https://img.shields.io/badge/Language-SystemVerilog-green?style=flat&logo=systemverilog)
-![Verification](https://img.shields.io/badge/Verification-UVM_Style_OOP-blue?style=flat)
-![Platform](https://img.shields.io/badge/Platform-Xilinx_Vivado-red?style=flat&logo=xilinx)
+<div align="center">
 
-> **32-bit RISC-V Multi-Cycle CPU Core + APB Interconnect + Peripherals**
+<img src="https://img.shields.io/badge/Architecture-RISC--V_RV32I-purple?style=flat&logo=riscv&logoColor=white" />
+<img src="https://img.shields.io/badge/Implementation-Multi_Cycle_FSM-blue?style=flat" />
+<img src="https://img.shields.io/badge/Bus_Protocol-AMBA_APB-orange?style=flat&logo=arm&logoColor=white" />
+<img src="https://img.shields.io/badge/Language-SystemVerilog-green?style=flat&logo=systemverilog&logoColor=white" />
+<img src="https://img.shields.io/badge/Verification-UVM_Style_OOP-blue?style=flat" />
+<img src="https://img.shields.io/badge/Platform-Xilinx_Vivado-red?style=flat&logo=xilinx&logoColor=white" />
+
+<br>
+
+> **32-bit RISC-V Multi-Cycle CPU Core + AMBA APB Interconnect + Peripherals**
 >
 > FSM 기반의 멀티 사이클 프로세서 설계 및 표준 버스 프로토콜을 적용한 FPGA 임베디드 MCU 시스템
+
+</div>
 
 ---
 
@@ -94,16 +109,14 @@ graph LR
 
 레지스터 간 연산 수행. 총 **3 Cycles** 소요 (`FETCH` → `DECODE` → `R_EXE`).
 
-  * **State Flow:**
-      * `R_EXE`: ALU가 연산을 수행하고 결과를 레지스터 파일(`rd`)에 씁니다. 다음 상태는 `FETCH`로 돌아갑니다.
+  * **State Flow:** `R_EXE` 상태에서 ALU 연산을 수행하고 결과를 레지스터(`rd`)에 쓴 후, `FETCH`로 복귀합니다.
   * **Operations:** `ADD`, `SUB`, `SLL`, `SLT`, `XOR`, `SRL`, `OR`, `AND`.
 
 ### 3.2 I-Type (Immediate Arithmetic)
 
 상수 연산 수행. 총 **3 Cycles** 소요 (`FETCH` → `DECODE` → `I_EXE`).
 
-  * **State Flow:**
-      * `I_EXE`: 레지스터(`rs1`)와 확장된 상수(`imm`)를 ALU 연산하고 결과를 저장합니다.
+  * **State Flow:** `I_EXE` 상태에서 레지스터(`rs1`)와 확장된 상수(`imm`)를 연산하고 결과를 저장합니다.
   * **Operations:** `ADDI`, `ANDI`, `ORI`, `SLTI` 등.
 
 ### 3.3 Load Instructions (I-Type)
@@ -129,16 +142,14 @@ graph LR
 
 조건부 분기. 총 **3 Cycles** 소요 (`FETCH` → `DECODE` → `B_EXE`).
 
-  * **State Flow:**
-      * `B_EXE`: ALU에서 비교 연산 수행. 조건 만족 시 `PC`를 분기 주소로 업데이트.
+  * **State Flow:** `B_EXE` 상태에서 ALU 비교 연산을 수행하고, 조건 만족 시 `PC`를 분기 주소로 업데이트합니다.
   * **Operations:** `BEQ`, `BNE`, `BLT`, `BGE` 등.
 
 ### 3.6 Jump Instructions (J/I-Type)
 
 무조건 점프 및 링크. 총 **3 Cycles** 소요.
 
-  * **State Flow:**
-      * `J_EXE` / `JL_EXE`: 점프 주소 계산 후 `PC` 업데이트, 복귀 주소(`PC+4`)를 레지스터에 저장.
+  * **State Flow:** `J_EXE` / `JL_EXE` 상태에서 점프 주소를 계산하여 `PC`를 업데이트하고, 복귀 주소(`PC+4`)를 레지스터에 저장합니다.
   * **Operations:** `JAL` (J-Type), `JALR` (I-Type).
 
 -----
@@ -186,36 +197,51 @@ APB 버스와 UART 주변장치를 중점적으로 검증하기 위해 **클래�
 
 -----
 
-## 📂 6. 디렉토리 구조 (Directory Structure)
+## 📂 6. 프로젝트 발표 자료 (Presentation)
+
+본 프로젝트의 상세한 아키텍처 설계, FSM 상태도, 그리고 검증 결과 파형은 아래 보고서를 통해 확인하실 수 있습니다.
+
+\<div align="center"\>
+
+
+[![PDF Report](https://img.shields.io/badge/📄_PDF_Report-View_Document-FF0000?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/seokhyun-hwang/files/blob/main/RISC-V_RV32I_CPU_Multi-Cycle_-_AMBA_APB_Peripheral.pdf)
+
+\</div\>
+
+<br>
+
+-----
+
+## 📂 7. 디렉토리 구조 (Directory Structure)
 
 ```text
 📦 RISCV-SoC-Project
  ┣ 📂 src
- ┃ ┣ 📂 core              # CPU Core Logic
- ┃ ┃ ┣ 📜 CPU_RV32I.sv    # CPU Top Module
- ┃ ┃ ┣ 📜 ControlUnit.sv  # Multi-Cycle FSM Controller
- ┃ ┃ ┣ 📜 DataPath.sv     # ALU, Registers, PC Logic
- ┃ ┃ ┗ 📜 defines.sv      # Opcode Definitions
- ┃ ┣ 📂 bus               # Bus Interconnect
- ┃ ┃ ┣ 📜 APB_Master.sv   # APB Bridge Controller
- ┃ ┃ ┗ 📜 APB_Slave.sv    # Generic APB Slave Interface
- ┃ ┣ 📂 peripheral        # IO Modules
- ┃ ┃ ┣ 📜 GPO.sv          # General Purpose Output (LED)
- ┃ ┃ ┣ 📜 GPI.sv          # General Purpose Input (Switch)
- ┃ ┃ ┣ 📜 GPIO.sv         # Bidirectional IO
- ┃ ┃ ┣ 📜 UART_ph.sv      # UART Controller Wrapper
- ┃ ┃ ┗ 📜 RAM.sv          # Data Memory (APB Slave)
- ┃ ┣ 📜 ROM.sv            # Instruction Memory
- ┃ ┗ 📜 MCU.sv            # [System Top] SoC Integration
- ┣ 📂 sim                 # Verification
- ┃ ┣ 📜 tb_rv32i.sv       # System Level Simulation
- ┃ ┗ 📜 tb_master_uart.sv # UVM-style Bus Verification
+ ┃ ┣ 📂 core               # CPU Core Logic
+ ┃ ┃ ┣ 📜 CPU_RV32I.sv     # CPU Top Module
+ ┃ ┃ ┣ 📜 ControlUnit.sv   # Multi-Cycle FSM Controller
+ ┃ ┃ ┣ 📜 DataPath.sv      # ALU, Registers, PC Logic
+ ┃ ┃ ┗ 📜 defines.sv       # Opcode Definitions
+ ┃ ┣ 📂 bus                # Bus Interconnect
+ ┃ ┃ ┣ 📜 APB_Master.sv    # APB Bridge Controller
+ ┃ ┃ ┗ 📜 APB_Slave.sv     # Generic APB Slave Interface
+ ┃ ┣ 📂 peripheral         # IO Modules
+ ┃ ┃ ┣ 📜 GPO.sv           # General Purpose Output (LED)
+ ┃ ┃ ┣ 📜 GPI.sv           # General Purpose Input (Switch)
+ ┃ ┃ ┣ 📜 GPIO.sv          # Bidirectional IO
+ ┃ ┃ ┣ 📜 UART_ph.sv       # UART Controller Wrapper
+ ┃ ┃ ┗ 📜 RAM.sv           # Data Memory (APB Slave)
+ ┃ ┣ 📜 ROM.sv             # Instruction Memory
+ ┃ ┗ 📜 MCU.sv             # [System Top] SoC Integration
+ ┣ 📂 sim                  # Verification
+ ┃ ┣ 📜 tb_rv32i.sv        # System Level Simulation
+ ┃ ┗ 📜 tb_master_uart.sv  # UVM-style Bus Verification
  ┗ 📜 MY_Basys-3-Master.xdc # FPGA Constraints
 ```
 
 -----
 
-## 🚀 7. 실행 가이드 (How to Run)
+## 🚀 8. 실행 가이드 (How to Run)
 
 1.  **Vivado 실행:** Xilinx Vivado Design Suite를 실행하고 **Basys 3** 보드를 타겟으로 프로젝트를 생성합니다.
 2.  **파일 추가:** `src` 및 `sim` 폴더 내의 모든 `.sv` 파일과 `.xdc` 파일을 프로젝트에 추가합니다.
@@ -226,7 +252,7 @@ APB 버스와 UART 주변장치를 중점적으로 검증하기 위해 **클래�
 
 -----
 
-> *Designed with SystemVerilog for RISC-V Architecture Study*
+Copyright ⓒ 2025. SEOKHYUN HWANG. All rights reserved.
 
 ```
 ```
