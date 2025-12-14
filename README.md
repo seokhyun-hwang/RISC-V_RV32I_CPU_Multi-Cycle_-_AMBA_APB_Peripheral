@@ -22,7 +22,7 @@
 ## 📖 1. 프로젝트 개요 (Overview)
 
 이 프로젝트는 **SystemVerilog**를 사용하여 **RISC-V RV32I (Base Integer Instruction Set)** 아키텍처를 **멀티 사이클(Multi-Cycle)** 방식으로 구현한 프로세서 설계입니다.
-단일 사이클 방식과 달리, **Finite State Machine (FSM)**을 통해 명령어 실행 과정을 `FETCH` → `DECODE` → `EXECUTE` → `MEMORY` → `WRITEBACK` 단계로 나누어 처리합니다. 이를 통해 하드웨어 자원을 효율적으로 공유하고, 임계 경로(Critical Path)를 줄여 동작 주파수를 최적화할 수 있는 구조를 갖추고 있습니다.
+단일 사이클 방식과 달리, **Finite State Machine(FSM)**을 통해 명령어 실행 과정을 `FETCH` → `DECODE` → `EXECUTE` → `MEMORY` → `WRITEBACK` 단계로 나누어 처리합니다. 이를 통해 하드웨어 자원을 효율적으로 공유하고, 임계 경로(Critical Path)를 줄여 동작 주파수를 최적화할 수 있는 구조를 갖추고 있습니다.
 
 ### ✨ 핵심 설계 특징 (Key Features)
 * **Multi-Cycle Microarchitecture:** FSM을 사용하여 명령어 종류에 따라 가변적인 클럭 사이클(3~5 Cycles)을 소모하며 실행 효율 최적화.
@@ -192,7 +192,8 @@ APB 버스와 UART 주변장치를 중점적으로 검증하기 위해 **클래�
 
 본 프로젝트의 상세한 아키텍처 설계, FSM 상태도, 그리고 검증 결과 파형은 아래 보고서를 통해 확인하실 수 있습니다.
 
-[](https://github.com/seokhyun-hwang/files/blob/main/RISC-V_RV32I_CPU_Multi-Cycle_-_AMBA_APB_Peripheral.pdf)
+
+[![PDF Report](https://img.shields.io/badge/📄_PDF_Report-View_Document-FF0000?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/seokhyun-hwang/files/blob/main/RISC-V_RV32I_CPU_Multi-Cycle_-_AMBA_APB_Peripheral.pdf)
 
 <br>
 
